@@ -20,12 +20,15 @@ public class SongsController {
     @Autowired
     private Songs songs;
 
-    List<String> song1=new ArrayList<String>();
+    List<SongDto> song1=new ArrayList<>();
 
-    public List<String> getSong1() {
-        song1.add("Unchained");
-        song1.add("2Pac/James Brown");
-        song1.add("Django Unchained Soundtrack");
+    public List<SongDto> getSong1() {
+        SongDto songDto = new SongDto();
+        songDto.setArtist("Kiss");
+        songDto.setAlbum("Kiss");
+        songDto.setName("Rock and roll all night");
+
+        song1.add(songDto);
 
         return song1;
     }
