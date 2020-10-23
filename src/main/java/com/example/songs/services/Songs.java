@@ -4,4 +4,5 @@ import com.example.songs.dto.SongDto;
 
 public interface Songs {
     SongDto getSong();
+
 }
