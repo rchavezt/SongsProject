@@ -8,6 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 
@@ -18,28 +19,25 @@ public class SongsController {
     @Autowired
     private Songs songs;
 
-
-
-    @RequestMapping(value = "/1", method = RequestMethod.GET)
+    @RequestMapping(value = "/random", method = RequestMethod.GET)
     public SongDto getSong(){
         return songs.getSong();
     }
 
-    @RequestMapping(value = "/www.youtube.com/results?search_query={song}", method = RequestMethod.GET)
-    public String getSongUrl(@PathVariable String song){
-        return song;
+    @RequestMapping(value = "/{number}", method = RequestMethod.GET)
+    public List<SongDto> getSongs(@PathVariable Integer number){
+        return songs.getSongs(number);
     }
 
-    @RequestMapping(value="/{song}", method = RequestMethod.GET)
-    public ModelAndView getSongVideo(@org.jetbrains.annotations.NotNull @PathVariable Map<String,String> song){
-
-        String rola=song.get("song");
-
-        ModelAndView model=new ModelAndView("Link");
-        model.addObject("msg","www.youtube.com/results?search_query="+rola);
-
-        return model;
+    @RequestMapping(value="/getTwo", method = RequestMethod.GET)
+    public List<SongDto> get2Songs(){
+        return songs.getTwoSongs();
     }
 
+    @RequestMapping(value = "/youtube/{song}", method = RequestMethod.GET)
+    public String getSongVideo(@PathVariable String song){
+        return songs.getYTUrl(song);
     }
+
+}
 
