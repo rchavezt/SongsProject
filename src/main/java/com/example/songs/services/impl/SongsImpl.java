@@ -79,15 +79,52 @@ public class SongsImpl implements Songs {
 
     @Override
     public List<SongDto> getTwoSongs() {
-        //TODO Checo lo debe implementar
-        return null;
+        List<SongDto> songList = new ArrayList<>();
+
+        SongDto song1 = new SongDto();
+        SongDto song2 = new SongDto();
+        SongDto song3 = new SongDto();
+
+        song1.setName("Livin on a prayer");
+        song1.setAlbum("Bon Jovi");
+        song1.setArtist("Bon Jovi");
+
+        song2.setName("Back in black");
+        song2.setAlbum("Back in black");
+        song2.setArtist("AC/DC");
+
+        song3.setName("El Ansioso");
+        song3.setAlbum("Marrano");
+        song3.setArtist("Grupo marrano");
+
+        songList.add(song1);
+        songList.add(song2);
+        songList.add(song3);
+
+
+
+        List<SongDto> returnedSongList = new ArrayList<>();
+
+        for (int i =0; i <  2; i++){
+            returnedSongList.add(songList.get(ThreadLocalRandom.current().nextInt(0, 3)));
+        }
+
+        return returnedSongList;
+
     }
 
     @Override
     public String getYTUrl(String song) {
-        //TODO Checo lo debe implementar
-        return null;
+        if (song.equals("Back in black") ) {
+            return "https://www.youtube.com/watch?v=pAgnJDJN4VA";
+        } else if (song.equals("Livin on a prayer")){
+            return "https://www.youtube.com/watch?v=lDK9QqIzhwk";
+        } else if (song.equals("El ansioso")){
+        return "https://www.youtube.com/watch?v=3-Z-pzxiUAs";
+        } else {
+            return "Solo tengo urls para Back in black, El ansioso o Livin on a prayer como parámetros joven, ahí disculpe";
+        }
+        }
     }
-}
 
 

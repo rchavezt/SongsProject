@@ -9,5 +9,6 @@ public class SongDto {
     public String name;
     public String artist;
     public String album;
+    public String YTUrl;
 }
 
