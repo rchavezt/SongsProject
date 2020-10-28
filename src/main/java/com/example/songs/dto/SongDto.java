@@ -6,9 +6,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SongDto {
-    public String name;
-    public String artist;
-    public String album;
-    public String YTUrl;
+    private Long id;
+    private String name;
+    private String artist;
+    private String album;
+    private String YTUrl;
 }
 

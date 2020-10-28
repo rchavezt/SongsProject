@@ -1,8 +1,11 @@
 package com.example.songs.services.impl;
 
+import com.example.songs.dao.SongDao;
 import com.example.songs.dto.SongDto;
+import com.example.songs.entities.SongEntity;
 import com.example.songs.exceptions.BadRequestException;
 import com.example.songs.services.Songs;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,6 +14,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class SongsImpl implements Songs {
+
+    @Autowired
+    SongDao songDao;
 
     @Override
     public SongDto getSong() {
@@ -125,6 +131,22 @@ public class SongsImpl implements Songs {
             return "Solo tengo urls para Back in black, El ansioso o Livin on a prayer como parámetros joven, ahí disculpe";
         }
         }
+
+    @Override
+    public SongDto createSong(SongDto songDto) {
+        SongEntity songEntity = new SongEntity();
+
+        songEntity.setName(songDto.getName());
+        songEntity.setAlbum(songDto.getAlbum());
+        songEntity.setArtist(songDto.getArtist());
+        songEntity.setYTUrl(songDto.getYTUrl());
+
+        songEntity = songDao.save(songEntity);
+
+        songDto.setId(songEntity.getId());
+
+        return songDto;
     }
+}
 
 
