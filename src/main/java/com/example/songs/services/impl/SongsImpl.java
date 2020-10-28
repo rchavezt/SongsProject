@@ -116,11 +116,11 @@ public class SongsImpl implements Songs {
     @Override
     public String getYTUrl(String song) {
         if (song.equals("Back in black") ) {
-            return "https://www.youtube.com/watch?v=pAgnJDJN4VA";
+            return "URL al video: https://www.youtube.com/watch?v=pAgnJDJN4VA";
         } else if (song.equals("Livin on a prayer")){
-            return "https://www.youtube.com/watch?v=lDK9QqIzhwk";
+            return "URL al video: https://www.youtube.com/watch?v=lDK9QqIzhwk";
         } else if (song.equals("El ansioso")){
-        return "https://www.youtube.com/watch?v=3-Z-pzxiUAs";
+        return "URL al video: https://www.youtube.com/watch?v=3-Z-pzxiUAs";
         } else {
             return "Solo tengo urls para Back in black, El ansioso o Livin on a prayer como parámetros joven, ahí disculpe";
         }
