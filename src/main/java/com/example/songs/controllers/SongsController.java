@@ -4,12 +4,8 @@ import com.example.songs.dto.SongDto;
 import com.example.songs.services.Songs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 
 @RestController
@@ -39,5 +35,9 @@ public class SongsController {
         return songs.getYTUrl(song);
     }
 
+    @RequestMapping(value = "/song", method = RequestMethod.POST)
+    public SongDto createSong(@RequestBody SongDto songDto){
+        return songs.createSong(songDto);
+    }
 }
 
