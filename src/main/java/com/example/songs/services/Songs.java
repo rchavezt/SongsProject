@@ -1,6 +1,7 @@
 package com.example.songs.services;
 
 import com.example.songs.dto.SongDto;
+import com.example.songs.entities.SongEntity;
 
 import java.util.List;
 
