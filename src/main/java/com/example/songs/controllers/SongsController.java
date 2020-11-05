@@ -31,7 +31,7 @@ public class SongsController {
     }
 
     @RequestMapping(value = "/youtube/{song}", method = RequestMethod.GET)
-    public String getSongVideo(@PathVariable String song){
+    public SongDto getSongVideo(@PathVariable String song){
         return songs.getYTUrl(song);
     }
 
@@ -39,5 +39,13 @@ public class SongsController {
     public SongDto createSong(@RequestBody SongDto songDto){
         return songs.createSong(songDto);
     }
+
+    @RequestMapping(value = "/deletedSong/{id}", method = RequestMethod.POST)
+    public SongDto deleteSongById(@PathVariable Long id){
+        return songs.deleteSongById(id);
+    }
+
+    @RequestMapping(value="/songId/{id}", method=RequestMethod.GET)
+    public SongDto getSongById(@PathVariable Long id){return songs.getSongById(id);}
 }
 

@@ -11,6 +11,6 @@ public interface Songs {
     SongDto deleteSongById(Long id);
     List<SongDto> getSongs(Integer number);
     List<SongDto> getTwoSongs();
-    String getYTUrl(String song);
+    SongDto getYTUrl(String song);
     SongDto createSong(SongDto songDto);
 }
