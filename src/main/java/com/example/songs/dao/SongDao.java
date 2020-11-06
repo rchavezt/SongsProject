@@ -4,4 +4,5 @@ import com.example.songs.entities.SongEntity;
 import org.springframework.data.repository.CrudRepository;
 
 public interface SongDao extends CrudRepository<SongEntity, Long> {
+    SongEntity findByName(String name);
 }

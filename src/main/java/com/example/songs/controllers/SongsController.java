@@ -1,6 +1,7 @@
 package com.example.songs.controllers;
 
 import com.example.songs.dto.SongDto;
+import com.example.songs.exceptions.BadRequestException;
 import com.example.songs.services.Songs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,7 @@ public class SongsController {
     }
 
     @RequestMapping(value = "/youtube/{song}", method = RequestMethod.GET)
-    public SongDto getSongVideo(@PathVariable String song){
+    public String getSongVideo(@PathVariable String song){
         return songs.getYTUrl(song);
     }
 
@@ -40,12 +41,19 @@ public class SongsController {
         return songs.createSong(songDto);
     }
 
-    @RequestMapping(value = "/deletedSong/{id}", method = RequestMethod.POST)
-    public SongDto deleteSongById(@PathVariable Long id){
-        return songs.deleteSongById(id);
+    @RequestMapping(value = "/deletedSong/{id}", method = RequestMethod.DELETE)
+    public void deleteSongById(@PathVariable Long id){
+        songs.deleteSongById(id);
     }
 
     @RequestMapping(value="/songId/{id}", method=RequestMethod.GET)
-    public SongDto getSongById(@PathVariable Long id){return songs.getSongById(id);}
+    public SongDto getSongById(@PathVariable Long id){
+
+        if(id < 1){
+            throw new BadRequestException("El id no puede ser menor a 1");
+        }
+
+        return songs.getSongById(id);
+    }
 }
 

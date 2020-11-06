@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
@@ -34,7 +35,13 @@ public class SongsImpl implements Songs {
 
     @Override
     public SongDto getSongById(Long id) {
-        SongEntity song = songDao.findById(id).get();
+        Optional<SongEntity> optionalSongEntity = songDao.findById(id);
+
+        if(optionalSongEntity.isEmpty()){
+            throw new BadRequestException("Limites fuera de rango");
+        }
+
+        SongEntity song = optionalSongEntity.get();
 
         SongDto songDto = new SongDto();
         songDto.setId(song.getId());
@@ -43,23 +50,12 @@ public class SongsImpl implements Songs {
         songDto.setAlbum(song.getAlbum());
         songDto.setYTUrl(song.getYTUrl());
 
-        if(id<1 || id>4){
-            throw new BadRequestException("Limites fuera de rango");
-        } else {
-            return songDto;
-        }
+        return songDto;
     }
 
     @Override
-    public SongDto deleteSongById(Long id) {
-
-
-        if(id<1 || id>4){
-            throw new BadRequestException("Limites fuera de rango");
-        } else {
-            songDao.deleteById(id);
-        }
-        return null;
+    public void deleteSongById(Long id) {
+        songDao.deleteById(id);
     }
 
     @Override
@@ -106,7 +102,24 @@ public class SongsImpl implements Songs {
 
     @Override
     public List<SongDto> getTwoSongs() {
-        SongEntity song1 = songDao.findById(new Long(ThreadLocalRandom.current().nextInt(1, 4))).get();
+        List<SongDto> songList = new ArrayList<>();
+
+        for (int i =0 ; i<2 ; i++){
+            SongEntity song = songDao.findById(new Long(ThreadLocalRandom.current().nextInt(1, 4))).get();
+
+            SongDto songDto = new SongDto();
+            songDto.setId(song.getId());
+            songDto.setName(song.getName());
+            songDto.setArtist(song.getArtist());
+            songDto.setAlbum(song.getAlbum());
+            songDto.setYTUrl(song.getYTUrl());
+
+            songList.add(songDto);
+        }
+
+        return songList;
+
+        /*SongEntity song1 = songDao.findById(new Long(ThreadLocalRandom.current().nextInt(1, 4))).get();
 
         SongDto songDto1 = new SongDto();
         songDto1.setId(song1.getId());
@@ -122,43 +135,14 @@ public class SongsImpl implements Songs {
         songDto2.setName(song2.getName());
         songDto2.setArtist(song2.getArtist());
         songDto2.setAlbum(song2.getAlbum());
-        songDto2.setYTUrl(song2.getYTUrl());
-
-        List<SongDto> songList = new ArrayList<>();
-        songList.add(songDto1);
-        songList.add(songDto2);
-
-
-
-        return songList;
-
+        songDto2.setYTUrl(song2.getYTUrl()); */
     }
 
     @Override
-    public SongDto getYTUrl(String song) {
-        SongEntity song1= songDao.findById(new Long(1)).get();
-        SongDto songDto1 = new SongDto();
-        songDto1.setYTUrl(song1.getYTUrl());
-
-        SongEntity song2 = songDao.findById(new Long(2)).get();
-        SongDto songDto2 = new SongDto();
-        songDto2.setYTUrl(song2.getYTUrl());
-
-        SongEntity song3 = songDao.findById(new Long(3)).get();
-        SongDto songDto3 = new SongDto();
-        songDto3.setYTUrl(song3.getYTUrl());
-
-
-        if (song.equals("Back in black") ) {
-            return songDto1;
-        } else if (song.equals("Welcome to the jungle")){
-            return songDto2;
-        } else if (song.equals("Automation")){
-        return songDto3;
-        } else {
-            return null;
-        }
-        }
+    public String getYTUrl(String name) {
+        SongEntity song = songDao.findByName(name);
+        return song.getYTUrl();
+    }
 }
 
 
